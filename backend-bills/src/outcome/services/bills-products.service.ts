@@ -4,53 +4,75 @@ import { UpdateBillsProductsDto } from '../dto/update-bills_products.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BillsProduct } from '../entities/bills-product.entity';
 import { Repository } from 'typeorm';
-import { CategoriesOutcome } from '../entities/categories_outcome.entity';
 import { SubCategoriesOutcome } from '../entities/sub_categories_outcome.entity';
+import { Bill } from '../entities/bill.entity';
+import { Product } from '../entities/product.entity';
 
 @Injectable()
 export class BillsProductsService {
   constructor(
     @InjectRepository(BillsProduct)
     private readonly billsProductsRepo: Repository<BillsProduct>,
-    @InjectRepository(CategoriesOutcome)
-    private readonly categoryOutRepo: Repository<CategoriesOutcome>,
-    @InjectRepository(SubCategoriesOutcome)
-    private readonly subCategoryRepo: Repository<SubCategoriesOutcome>,
+    @InjectRepository(Bill)
+    private readonly billRepo: Repository<Bill>,
+    @InjectRepository(Product)
+    private readonly productRepo: Repository<Product>,
   ) {}
 
   async create(createBillsProductsDto: CreateBillsProductsDto) {
-    const categoryOut = await this.categoryOutRepo.findOne({
+    const bill = await this.billRepo.findOne({
       where: {
-        id: createBillsProductsDto.categoriesId,
+        id: createBillsProductsDto.billId,
       },
     });
-    const subCategoryOut = await this.subCategoryRepo.findOne({
+    const product = await this.productRepo.findOne({
       where: {
-        id: createBillsProductsDto.subCategoriesId,
+        id: createBillsProductsDto.productId,
       },
     });
-    if (!categoryOut) {
-      throw new Error('Category not found');
+    if (!bill) {
+      throw new Error('Bill not found');
     }
-    if (!subCategoryOut) {
-      throw new Error('Subcategory not found');
+    if (!product) {
+      throw new Error('Product not found');
     }
-    return ;
+    const billProduct = this.billsProductsRepo.create({
+      ...createBillsProductsDto,
+      productId: product,
+      billId: bill
+    })
+    return this.billsProductsRepo.save(billProduct);
   }
 
-  findAll() {
-    return `This action returns all billsProducts`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} billsProduct`;
-  }
-
-  update(id: number, updateBillsProductsDto: UpdateBillsProductsDto) {
-    return `This action updates a #${id} billsProduct`;
+  async update(id: number, updateBillsProductsDto: UpdateBillsProductsDto) {
+    const billProduct = await this.billsProductsRepo.findOne({
+      where:{
+        id: id,
+      },
+    });
+    if (!billProduct) {
+      throw new Error("BillProduct not found")
+    }
+    if (updateBillsProductsDto.billId) {
+      const bill = await this.billRepo.findOne({
+        where:{
+          id: updateBillsProductsDto.billId,
+        },
+      });
+      this.billsProductsRepo.merge(billProduct, bill)
+    }
+    if (updateBillsProductsDto.productId) {
+      const product = await this.productRepo.findOne({
+        where:{
+          id: updateBillsProductsDto.productId,
+        },
+      });
+      this.billsProductsRepo.merge(billProduct, product)
+    }
+    return this.billsProductsRepo.save(billProduct);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} billsProduct`;
+    return this.billsProductsRepo.delete(id);
   }
 }

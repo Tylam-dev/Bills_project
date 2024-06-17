@@ -8,35 +8,36 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class BillsService {
   constructor(
-    @InjectRepository(Bill) private readonly billService: Repository<Bill>,
+    @InjectRepository(Bill) private readonly billRepo: Repository<Bill>,
   ) {}
   create(createBillDto: CreateBillDto) {
-    return this.billService.create(createBillDto);
+    return this.billRepo.save(createBillDto);
   }
 
-  findAll() {
-    return this.billService.find();
+  async findAll() {
+    return await this.billRepo.find();
   }
 
-  findOne(id: number) {
-    return this.billService.findOne({
+  async findOne(id: number) {
+    return await this.billRepo.findOne({
       where: {
         id: id,
       },
+      relations:['productsId.productId', 'productsId']
     });
   }
 
   async update(id: number, updateBillDto: UpdateBillDto) {
-    const bill = await this.billService.findOne({
+    const bill = await this.billRepo.findOne({
       where: {
         id: id,
       },
     });
-    this.billService.merge(bill, updateBillDto);
-    return this.billService.save(bill);
+    this.billRepo.merge(bill, updateBillDto);
+    return this.billRepo.save(bill);
   }
 
   remove(id: number) {
-    return this.billService.delete(id);
+    return this.billRepo.delete(id);
   }
 }

@@ -17,6 +17,7 @@ export class ProductsService {
     @InjectRepository(SubCategoriesOutcome)
     private readonly subCategoryRepo: Repository<SubCategoriesOutcome>,
   ) {}
+  
   async create(createProductDto: CreateProductDto) {
     const subCategoryOut = await this.subCategoryRepo.findOne({
       where: {
@@ -43,22 +44,6 @@ export class ProductsService {
         id: id,
       },
     });
-  }
-
-  async findByCategory(id: number) {
-    const categoryOut = await this.categoryOutRepo.findOne({
-      where: {
-        id: id,
-      },
-      relations: ['subcategoriesId', 'subcategoriesId.productsId'],
-    });
-    if (!categoryOut) {
-      throw new Error('Category Not Found');
-    }
-    const products = categoryOut.subcategoriesId.flatMap(
-      (subcategory) => subcategory.productsId,
-    );
-    return products;
   }
   async update(id: number, updateProductDto: UpdateProductDto) {
     const product = await this.productRepo.findOne({

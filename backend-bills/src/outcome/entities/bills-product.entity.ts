@@ -14,10 +14,10 @@ export class BillsProduct {
   id: number;
 
   @Column({ type: 'int', nullable: false })
-  quatity: number;
+  quantity: number;
 
   @Column({ type: 'float', nullable: false, name: 'cost_unit' })
-  costUnit: Float32Array;
+  costUnit: number;
 
   @ManyToOne(() => Bill, (bill) => bill.productsId)
   @JoinColumn({ name: 'bills_id' })
