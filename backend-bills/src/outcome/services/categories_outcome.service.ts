@@ -19,7 +19,9 @@ export class CategoriesOutcomeService {
   }
 
   findAll() {
-    return this.categoryOutcomeRepo.find();
+    return this.categoryOutcomeRepo.find({
+      relations:['subcategoriesId.productsId']
+    });
   }
 
   findOne(id: number) {

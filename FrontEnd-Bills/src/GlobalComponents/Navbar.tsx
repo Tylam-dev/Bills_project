@@ -22,9 +22,9 @@ const Navbar: React.FC<ChildComponentsProps> = ({setOpenDrawer}) => {
               sx={{ mr: 2 }}
               onClick={() => setOpenDrawer(true)}
             >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <MenuIcon sx={{color:"secondary.main"}}/>
+            </IconButton >
+            <Typography color={'secondary'} variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Bills App
             </Typography>
           </Toolbar>

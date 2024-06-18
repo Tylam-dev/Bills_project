@@ -7,61 +7,48 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import ClassIcon from '@mui/icons-material/Class';
-import CategoryIcon from '@mui/icons-material/Category';
 import ReceiptIcon from '@mui/icons-material/Receipt';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import PaidIcon from '@mui/icons-material/Paid';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import { useNavigate } from 'react-router-dom';
 
 interface ChildComponentsProps {
     setOpenDrawer: React.Dispatch<React.SetStateAction<boolean>>,
     openDrawer: boolean,
 }
 const outcomeButtons = [
-    { text: "Categories", icon: <ClassIcon/> },
-    { text: "Subcategories", icon: <CategoryIcon/> },
-    { text: "Bills", icon: <ReceiptIcon/> },
+    { text: "Outcome Managment", icon: <EditNoteIcon />, link: 'outcome-managment' },
+    { text: "Bills", icon: <ReceiptIcon/>, link: 'bills-managment' },
 ]
 
 const incomeButtons = [
-    { text: 'Incomes', icon: <AttachMoneyIcon/>},
-    { text: 'Categories', icon: <CategoryIcon/>}
+    { text: 'Income Managment', icon: <EditNoteIcon/>},
+    { text: 'Incomes', icon: <AttachMoneyIcon/>}
 ]
 const VerticalNav: React.FC<ChildComponentsProps> = ({setOpenDrawer, openDrawer}) => {
+
+    const navigate = useNavigate()
     const DrawerList = (
-        <Box sx={{ width: 250 }} role="presentation" onClick={() => setOpenDrawer(false)}>
+        <Box sx={{ width: 250 }} minHeight={'100vh'} bgcolor={'primary.light'} role="presentation" onClick={() => setOpenDrawer(false)}>
           <List>
-            <ListItem>
+            <ListItem >
                 <ListItemIcon>
                     <PointOfSaleIcon/>
                 </ListItemIcon>
                 <ListItemText primary={"Outcome"}/>
             </ListItem>
             {outcomeButtons.map((obj, index) => (
-              <ListItem key={index} disablePadding>
-                <ListItemButton>
+              <ListItem  key={index} disablePadding>
+                <ListItemButton onClick={() => navigate(obj.link)}>
                   <ListItemIcon>
                     {obj.icon}
                   </ListItemIcon>
-                  <ListItemText secondary={obj.text} />
+                  <ListItemText  secondary={obj.text} />
                 </ListItemButton>
               </ListItem>
             ))}
-          </List>
-          <Divider />
-          <List>
-            <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <ShoppingBasketIcon/>
-                  </ListItemIcon>
-                  <ListItemText primary={"Products"} />
-                </ListItemButton>
-            </ListItem>
           </List>
           <Divider />
           <List>
