@@ -7,5 +7,5 @@ export class CreateBillDto {
 
     @IsNotEmpty()
     @IsDate()
-    date: Date;
+    date: string;
 }

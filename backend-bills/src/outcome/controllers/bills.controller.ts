@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { BillsService } from '../services/bills.service';
 import { CreateBillDto } from '../dto/create-bill.dto';
 import { UpdateBillDto } from '../dto/update-bill.dto';
+import { FilterBillsDto } from '../dto/filter-bills.dto';
 
 @Controller('bills')
 export class BillsController {
@@ -21,8 +23,8 @@ export class BillsController {
   }
 
   @Get()
-  findAll() {
-    return this.billsService.findAll();
+  findAll(@Query() filter?:FilterBillsDto) {
+    return this.billsService.findAll(filter);
   }
 
   @Get(':id')

@@ -5,21 +5,20 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AccordionActions, Button, Divider } from '@mui/material';
 import { FetchData } from '../../../customHooks/FetchData';
 import { useEffect, useState } from 'react';
-import { Categories } from '../../../interfaces/Categories';
+import { CategoriesOutcome } from '../../../interfaces/CategoriesOutcome';
 import { SubcategoriesAccordion } from './Subcategories';
 
 
 const CategoriesAccordion:React.FC = () => {
-    const { fetchGetCategories } = FetchData()
-    const [data, setData] = useState<[] | Categories[]>([])
+    const { fetchGetCategoriesOutcome } = FetchData()
+    const [data, setData] = useState<[] | CategoriesOutcome[]>([])
     useEffect(() => {
         const getData = async() => {
-            const data = await fetchGetCategories()
+            const data = await fetchGetCategoriesOutcome()
             setData(data)
         }
         getData()
     },[])
-    console.log(data)
     return(
         <>
             {data.map((category, index) => (

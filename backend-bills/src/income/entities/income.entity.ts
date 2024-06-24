@@ -19,10 +19,9 @@ export class Income {
   mount: number;
 
   @Column({ type: 'date', nullable: false })
-  date: Date;
+  date: string;
 
   @ManyToOne(() => CategoriesIncome)
   @JoinColumn({ name: 'categories_inc_id' })
   categoryId: CategoriesIncome;
-  income: Promise<CategoriesIncome>;
 }

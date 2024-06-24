@@ -1,8 +1,8 @@
-import { Product } from "./Categories";
+import { Product } from "./CategoriesOutcome";
 
 export interface Bill {
     id:number;
     description: string;
-    date: Date;
+    date: string;
     ProductsId?: Product[]
 }

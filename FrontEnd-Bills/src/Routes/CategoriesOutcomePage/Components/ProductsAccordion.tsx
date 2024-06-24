@@ -1,5 +1,5 @@
 import { Accordion, AccordionActions, AccordionSummary, Button, Divider } from "@mui/material"
-import { Product } from "../../../interfaces/Categories"
+import { Product } from "../../../interfaces/CategoriesOutcome"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 interface ComponentProps {

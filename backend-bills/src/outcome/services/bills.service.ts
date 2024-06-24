@@ -3,7 +3,8 @@ import { CreateBillDto } from '../dto/create-bill.dto';
 import { UpdateBillDto } from '../dto/update-bill.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Bill } from '../entities/bill.entity';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
+import { FilterBillsDto } from '../dto/filter-bills.dto';
 
 @Injectable()
 export class BillsService {
@@ -14,7 +15,15 @@ export class BillsService {
     return this.billRepo.save(createBillDto);
   }
 
-  async findAll() {
+  async findAll(filter?:FilterBillsDto) {
+    const {from, to} = filter
+    if (from && to) {
+      return await this.billRepo.find({
+        where:{
+          date: Between(from,to)
+        }
+      });
+    }
     return await this.billRepo.find();
   }
 

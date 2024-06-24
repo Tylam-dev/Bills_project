@@ -11,7 +11,7 @@ export class CreateIncomeDto {
 
   @IsNotEmpty()
   @IsDate()
-  date: Date;
+  date: string;
 
   @IsNotEmpty()
   @IsNumber()

@@ -10,9 +10,8 @@ export class Bill {
   @Column({ type: 'varchar', nullable: false, length: 255 })
   description: string;
 
-  @Exclude()
   @Column({ type: 'date', nullable: false })
-  date: Date;
+  date: string;
 
   @OneToMany(() => BillsProduct, (billProduct) => billProduct.billId)
   productsId: BillsProduct[];

@@ -10,7 +10,6 @@ import ListItemText from '@mui/material/ListItemText';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import PaidIcon from '@mui/icons-material/Paid';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,10 +22,6 @@ const outcomeButtons = [
     { text: "Bills", icon: <ReceiptIcon/>, link: 'bills-managment' },
 ]
 
-const incomeButtons = [
-    { text: 'Income Managment', icon: <EditNoteIcon/>},
-    { text: 'Incomes', icon: <AttachMoneyIcon/>}
-]
 const VerticalNav: React.FC<ChildComponentsProps> = ({setOpenDrawer, openDrawer}) => {
 
     const navigate = useNavigate()
@@ -58,16 +53,14 @@ const VerticalNav: React.FC<ChildComponentsProps> = ({setOpenDrawer, openDrawer}
                 </ListItemIcon>
                 <ListItemText primary={"Income"} />
             </ListItem>
-            {incomeButtons.map((obj, index) => (
-              <ListItem key={index} disablePadding>
-                <ListItemButton>
+            <ListItem disablePadding>
+                <ListItemButton onClick={() => navigate('income-managment')}>
                   <ListItemIcon>
-                    {obj.icon}
+                    <EditNoteIcon/>,
                   </ListItemIcon>
-                  <ListItemText secondary={obj.text} />
+                  <ListItemText  secondary={'Income Managment'} />
                 </ListItemButton>
               </ListItem>
-            ))}
           </List>
         </Box>
       );
