@@ -4,7 +4,7 @@ import { FetchData } from "../../../customHooks/FetchData"
 import { useNavigate, useParams } from "react-router-dom"
 import { PostIncome } from "../../../interfaces/CategoriesIncome";
 import AddIcon from '@mui/icons-material/Add';
-import { DatePicker } from "@mui/x-date-pickers";
+
 import dayjs from "dayjs";
 
 const style = {
@@ -28,6 +28,7 @@ const AddIncomeModal = () => {
 
     const handleClose = () => {
         navigate("/income-managment")
+        window.location.reload()
     };
     const submitCategoryIncome = async() => {
         if (income) {

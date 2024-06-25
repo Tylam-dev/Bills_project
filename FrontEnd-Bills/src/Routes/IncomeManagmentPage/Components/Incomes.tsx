@@ -1,11 +1,13 @@
 import { Accordion, AccordionActions, AccordionSummary, Box, Button, Divider, Typography } from "@mui/material"
 import { Income } from "../../../interfaces/CategoriesIncome"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useNavigate } from "react-router-dom";
 
 interface ComponentsProps {
     incomes: Income[] | []
 }
 const Incomes: React.FC<ComponentsProps> = ({incomes}) => {
+    const navigate = useNavigate()
     return (
         <>
             {incomes.map((income, index) => (
@@ -29,7 +31,13 @@ const Incomes: React.FC<ComponentsProps> = ({incomes}) => {
             </AccordionSummary>
             <Divider sx={{bgcolor:'secondary.dark'}}/>
             <AccordionActions sx={{display:"flex", justifyContent:'center', gap:10, bgcolor:'secondary.light'}}>
-                    <Button variant="contained" color="error">Delete</Button>
+                    <Button 
+                    onClick={() => navigate(`deleteIncome/${income.id}/${income.description}`)}
+                    variant="contained" 
+                    color="error"
+                    >
+                        Delete
+                    </Button>
                     <Button variant="contained" color="success">Edit</Button>
             </AccordionActions>
             </Accordion>

@@ -26,6 +26,7 @@ const AddCatIncomeModal = () => {
 
     const handleClose = () => {
         navigate("/income-managment")
+        window.location.reload()
     };
     const submitCategoryIncome = async() => {
         if (categoryIncome.name != null) {

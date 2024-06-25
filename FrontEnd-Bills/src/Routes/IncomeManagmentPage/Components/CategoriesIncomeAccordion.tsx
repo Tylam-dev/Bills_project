@@ -33,7 +33,12 @@ const CategoriesIncomeAccordion: React.FC<ComponentProps> = ({categoriesIncome})
                     onClick={() => navigate(`addIncome/${category.id}`)}
                     >Add Income</Button>
                     {(category.incomeId.length === 0)?
-                    <Button variant="contained" color='error'>Delete Category</Button>
+                    <Button
+
+                    variant="contained" 
+                    color='error'
+                    >
+                        Delete Category</Button>
                     :
                     ""
                     }
