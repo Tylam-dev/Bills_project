@@ -1,9 +1,9 @@
 import { Box, Button, Modal, Typography } from "@mui/material"
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FetchData } from "../../../customHooks/FetchData";
 import RemoveIcon from '@mui/icons-material/Remove';
 import ClearIcon from '@mui/icons-material/Clear';
+import { CatIncomeServiceHook } from "../../../customHooks/CatIncomeServiceHook";
 
 
 const style = {
@@ -21,7 +21,7 @@ const style = {
 const DeleteCatIncomeModal = () => {
     const [open] = useState<boolean>(true)
     const { idCatInc, nameIn } = useParams()
-    const {deleteCategoryIncome} = FetchData()
+    const {deleteCategoryIncome} = CatIncomeServiceHook()
     const navigate = useNavigate()
     const handleCloseReload = () => {
         navigate("/income-managment")

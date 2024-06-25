@@ -2,10 +2,10 @@ import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Income, PostIncome } from "../../../interfaces/CategoriesIncome";
-import { FetchData } from "../../../customHooks/FetchData";
 import Loading from "../../../GlobalComponents/Loading";
 import RefreshIcon from '@mui/icons-material/Refresh';
 import dayjs from "dayjs";
+import { IncomeServiceHook } from "../../../customHooks/IncomeServiceHook";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -23,7 +23,7 @@ const EditIncomeModal = () => {
     const [loading, setLoading] = useState<boolean>(true)
     const { idInc } = useParams()
     const [income, setIncome] = useState<PostIncome>({})
-    const {getIncome, patchIncome} = FetchData()
+    const {getIncome, patchIncome} = IncomeServiceHook()
     const navigate = useNavigate()
 
     useEffect(() => {

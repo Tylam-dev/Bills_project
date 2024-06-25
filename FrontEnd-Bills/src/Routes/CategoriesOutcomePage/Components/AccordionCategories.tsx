@@ -3,14 +3,14 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AccordionActions, Button, Divider } from '@mui/material';
-import { FetchData } from '../../../customHooks/FetchData';
+import { CatOutcomeHook } from '../../../customHooks/CatOutcomeHook';
 import { useEffect, useState } from 'react';
 import { CategoriesOutcome } from '../../../interfaces/CategoriesOutcome';
 import { SubcategoriesAccordion } from './Subcategories';
 
 
 const CategoriesAccordion:React.FC = () => {
-    const { fetchGetCategoriesOutcome } = FetchData()
+    const { fetchGetCategoriesOutcome } = CatOutcomeHook()
     const [data, setData] = useState<[] | CategoriesOutcome[]>([])
     useEffect(() => {
         const getData = async() => {

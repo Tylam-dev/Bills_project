@@ -1,9 +1,9 @@
 import { Box, Button, Modal, Typography } from "@mui/material"
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FetchData } from "../../../customHooks/FetchData";
 import RemoveIcon from '@mui/icons-material/Remove';
 import ClearIcon from '@mui/icons-material/Clear';
+import { IncomeServiceHook } from "../../../customHooks/IncomeServiceHook";
 
 
 const style = {
@@ -23,7 +23,7 @@ const style = {
 const DeleteIncomeModal = () => {
     const [open] = useState<boolean>(true)
     const { idInc, descripIn } = useParams()
-    const {deleteIncome} = FetchData()
+    const {deleteIncome} = IncomeServiceHook()
     const navigate = useNavigate()
 
     const handleCloseReload = () => {

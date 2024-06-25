@@ -3,9 +3,9 @@ import AddIcon from '@mui/icons-material/Add';
 import { BillsAccordion } from "./Components/BillsAccordion";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useState } from "react";
-import { FetchData } from "../../customHooks/FetchData";
 import { Bill } from "../../interfaces/Bills";
 import dayjs from "dayjs";
+import { BillServiceHook } from "../../customHooks/BillsServiceHook";
 
 interface FromToDate {
     from: string,
@@ -15,7 +15,7 @@ interface FromToDate {
 const BillsPage: React.FC = () => {
     const [bills, setBills] = useState<Bill[] | []>([])
     const [ date, setDate ] = useState<FromToDate>({from:'', to:''})
-    const { fetchGetBills } = FetchData()
+    const { fetchGetBills } = BillServiceHook()
 
     const getData = async() => {
         const data:Bill[] = await fetchGetBills(date.from, date.to)

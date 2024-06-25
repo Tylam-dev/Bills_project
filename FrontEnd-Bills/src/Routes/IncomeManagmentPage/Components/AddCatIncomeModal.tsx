@@ -2,8 +2,8 @@ import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
-import { FetchData } from "../../../customHooks/FetchData";
 import { PostCategoriesIncome } from "../../../interfaces/CategoriesIncome";
+import { CatIncomeServiceHook } from "../../../customHooks/CatIncomeServiceHook";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -21,7 +21,7 @@ const style = {
 const AddCatIncomeModal = () => {
     const [open] = useState<boolean>(true)
     const [categoryIncome, setCategoryIncome] = useState<PostCategoriesIncome>({name: null})
-    const {postCategoriesIncome} = FetchData()
+    const {postCategoriesIncome} = CatIncomeServiceHook()
     const navigate = useNavigate()
 
     const handleClose = () => {

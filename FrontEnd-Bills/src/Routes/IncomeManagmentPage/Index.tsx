@@ -3,10 +3,10 @@ import AddIcon from '@mui/icons-material/Add';
 import { CategoriesIncomeAccordion } from "./Components/CategoriesIncomeAccordion";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useState } from "react";
-import { FetchData } from "../../customHooks/FetchData";
 import { CategoriesIncome } from "../../interfaces/CategoriesIncome";
 import dayjs from "dayjs";
 import { Outlet, useNavigate } from "react-router-dom";
+import { CatIncomeServiceHook } from "../../customHooks/CatIncomeServiceHook";
 
 interface FromToDate {
     from?: string,
@@ -16,7 +16,7 @@ interface FromToDate {
 const IncomeManagmentPage: React.FC = () => {
     const [categoriesIncome, setCategoriesIncome] = useState<[] | CategoriesIncome[]> ([])
     const [ date, setDate ] = useState<FromToDate>()
-    const { fetchGetCategoriesIncome } = FetchData()
+    const { fetchGetCategoriesIncome } = CatIncomeServiceHook()
     const navigate = useNavigate()
     const getData = async() => {
         if (date) {

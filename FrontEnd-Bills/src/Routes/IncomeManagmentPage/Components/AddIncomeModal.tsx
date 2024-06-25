@@ -1,11 +1,11 @@
 import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { useState } from "react"
-import { FetchData } from "../../../customHooks/FetchData"
 import { useNavigate, useParams } from "react-router-dom"
 import { PostIncome } from "../../../interfaces/CategoriesIncome";
 import AddIcon from '@mui/icons-material/Add';
 
 import dayjs from "dayjs";
+import { IncomeServiceHook } from "../../../customHooks/IncomeServiceHook";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -23,7 +23,7 @@ const AddIncomeModal = () => {
     const [open] = useState<boolean>(true)
     const { catInId } = useParams()
     const [income, setIncome] = useState<PostIncome>({categoryId: catInId})
-    const {postIncome} = FetchData()
+    const {postIncome} = IncomeServiceHook()
     const navigate = useNavigate()
 
     const handleClose = () => {
