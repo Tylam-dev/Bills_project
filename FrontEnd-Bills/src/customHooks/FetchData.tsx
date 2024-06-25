@@ -1,5 +1,5 @@
 import { Bill } from "../interfaces/Bills"
-import { CategoriesIncome, PostCategoriesIncome, PostIncome } from "../interfaces/CategoriesIncome"
+import { CategoriesIncome, Income, PostCategoriesIncome, PostIncome } from "../interfaces/CategoriesIncome"
 import { CategoriesOutcome } from "../interfaces/CategoriesOutcome"
 
 const FetchData = () => {
@@ -59,6 +59,20 @@ const FetchData = () => {
             console.error(error)
         }
     }
+    async function deleteCategoryIncome(catIncomeId:string) {
+        try {
+            await fetch(`http://localhost:3000/categories-income/${catIncomeId}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                }
+            )
+            }catch(error) {
+                console.log(error)
+            }
+    }
     async function postIncome(data:PostIncome) {
         const dataJson = JSON.stringify(data)
         try {
@@ -72,7 +86,32 @@ const FetchData = () => {
             }
             )
         }catch(error) {
-            console.log(error)
+            throw new Error('Error Post')
+        }
+    }
+    async function patchIncome(id:string, body: PostIncome) {
+        const bodyString = JSON.stringify(body)
+        try {
+            await fetch(`http://localhost:3000/income/${id}`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: bodyString,
+                }
+            )
+            }catch(error) {
+                console.log(error)
+            }
+    }
+    async function getIncome(id:string) {
+        try {
+            const response = await fetch(`http://localhost:3000/income/${id}`)
+            const data: Income = await response.json()
+            return data
+        } catch (error) {
+            throw new Error('Error fetching')
         }
     }
     async function deleteIncome(incomeId:string) {
@@ -89,7 +128,17 @@ const FetchData = () => {
                 console.log(error)
             }
     }
-    return {fetchGetCategoriesOutcome, fetchGetBills, fetchGetCategoriesIncome, postCategoriesIncome, postIncome, deleteIncome}
+    return {
+        fetchGetCategoriesOutcome, 
+        fetchGetBills, 
+        fetchGetCategoriesIncome, 
+        postCategoriesIncome, 
+        postIncome, 
+        deleteIncome, 
+        getIncome, 
+        patchIncome, 
+        deleteCategoryIncome
+    }
 }
 
 export {FetchData}

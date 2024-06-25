@@ -37,6 +37,7 @@ const CategoriesIncomeAccordion: React.FC<ComponentProps> = ({categoriesIncome})
 
                     variant="contained" 
                     color='error'
+                    onClick={() => navigate(`deleteCatIncome/${category.id}/${category.name}`)}
                     >
                         Delete Category</Button>
                     :

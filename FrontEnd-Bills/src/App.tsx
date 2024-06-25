@@ -10,6 +10,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { AddCatIncomeModal } from './Routes/IncomeManagmentPage/Components/AddCatIncomeModal';
 import { AddIncomeModal } from './Routes/IncomeManagmentPage/Components/AddIncomeModal';
 import { DeleteIncomeModal } from './Routes/IncomeManagmentPage/Components/DeleteIncomeModal';
+import { EditIncomeModal } from './Routes/IncomeManagmentPage/Components/EditIncomeModal';
+import { DeleteCatIncomeModal } from './Routes/IncomeManagmentPage/Components/DeleteCatIncomeModal';
 
 const theme = createTheme({
   palette: {
@@ -35,6 +37,8 @@ function App() {
               <Route path='income-managment' element={<IncomeManagmentPage/>}>
                 <Route path='addCatIncome' element={<AddCatIncomeModal/>}/>
                 <Route path='addIncome/:catInId' element={<AddIncomeModal/>}/>
+                <Route path='editIncome/:idInc' element={<EditIncomeModal/>}/>
+                <Route path='deleteCatIncome/:idCatInc/:nameIn' element={<DeleteCatIncomeModal/>}/>
                 <Route path='deleteIncome/:idInc/:descripIn' element={<DeleteIncomeModal/>}/>
               </Route>
               <Route path='incomes' element={<BillsPage/>}/>

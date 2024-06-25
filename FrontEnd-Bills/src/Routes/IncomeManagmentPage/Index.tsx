@@ -28,7 +28,7 @@ const IncomeManagmentPage: React.FC = () => {
         }
         
     }
-    console.log(categoriesIncome)
+
     return(
         <>
             <Box marginY={2} paddingX={2} display={"flex"} justifyContent={'space-between'} alignItems={'center'}>

@@ -26,15 +26,18 @@ const DeleteIncomeModal = () => {
     const {deleteIncome} = FetchData()
     const navigate = useNavigate()
 
-    const handleClose = () => {
+    const handleCloseReload = () => {
         navigate("/income-managment")
         window.location.reload()
     };
-    const submitDeleteIncome = async() => {
+    const handleClose = () => {
+        navigate("/income-managment")
+    };
+    const submitDeleteCatIncome = async() => {
         if (idInc ){
             try{
                 await deleteIncome(idInc)
-                handleClose()
+                handleCloseReload()
             }catch(error){
                 console.error(error)
             }
@@ -64,7 +67,7 @@ const DeleteIncomeModal = () => {
                 <Button 
                 sx={{height: 57, bgcolor:'red'}} 
                 variant="contained"
-                onClick={submitDeleteIncome}
+                onClick={submitDeleteCatIncome}
                 >
                     <RemoveIcon/>
                 </Button>

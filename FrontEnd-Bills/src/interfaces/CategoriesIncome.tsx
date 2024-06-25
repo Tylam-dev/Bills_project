@@ -7,7 +7,7 @@ export interface CategoriesIncome {
 export interface Income {
     id: number,
     description: string,
-    mount: number,
+    mount: string
     date: string
 }
 

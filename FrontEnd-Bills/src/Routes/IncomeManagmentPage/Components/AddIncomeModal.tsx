@@ -40,7 +40,6 @@ const AddIncomeModal = () => {
             }
         }
     }
-    console.log(income)
     return(
         <Modal
         open={open}

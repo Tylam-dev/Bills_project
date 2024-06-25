@@ -38,7 +38,11 @@ const Incomes: React.FC<ComponentsProps> = ({incomes}) => {
                     >
                         Delete
                     </Button>
-                    <Button variant="contained" color="success">Edit</Button>
+                    <Button 
+                    variant="contained" 
+                    color="success"
+                    onClick={() => navigate(`editIncome/${income.id}`)}
+                    >Edit</Button>
             </AccordionActions>
             </Accordion>
         ))}
