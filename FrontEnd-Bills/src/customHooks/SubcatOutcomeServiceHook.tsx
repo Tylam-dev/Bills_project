@@ -16,6 +16,19 @@ const SubcatOutcomeServiceHook = () => {
             throw new Error(`${error}`)
         }
     }
-    return{ postSubcatOutcome }
+    async function deleteSubcatOutcome(id: string) {
+        try{
+            await fetch(`http://localhost:3000/sub-categories-outcome/${id}`,
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-type": "application/json"
+                },
+            })
+        }catch(error){
+            throw new Error(`${error}`)
+        }
+    }
+    return{ postSubcatOutcome, deleteSubcatOutcome }
 }
 export{SubcatOutcomeServiceHook}
