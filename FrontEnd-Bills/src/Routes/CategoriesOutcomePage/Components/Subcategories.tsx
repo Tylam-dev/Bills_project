@@ -24,7 +24,11 @@ const SubcategoriesAccordion:React.FC<ComponentsProps> = ({subcategoriesOutcome}
                 <Divider/>
                 <ProductsAccordion products={subcategory.productsId}/>
                 <AccordionActions sx={{display:"flex", justifyContent:'center', gap:10, bgcolor:'secondary.light'}}>
-                    <Button sx={{bgcolor:'primary.light'}} variant="contained">Add Product</Button>
+                    <Button 
+                    sx={{bgcolor:'primary.light'}} 
+                    variant="contained"
+                    onClick={() => navigate(`addProduct/${subcategory.id}/${subcategory.name}`)}
+                    >Add Product</Button>
                     {(subcategory.productsId.length === 0)?
                     <Button 
                     variant="contained" 

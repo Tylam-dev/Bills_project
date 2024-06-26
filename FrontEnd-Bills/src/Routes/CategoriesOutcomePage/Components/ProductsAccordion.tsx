@@ -1,12 +1,14 @@
 import { Accordion, AccordionActions, AccordionSummary, Button, Divider } from "@mui/material"
 import { Product } from "../../../interfaces/CategoriesOutcome"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useNavigate } from "react-router-dom";
 
 interface ComponentProps {
     products: Product[]
 }
 
 const ProductsAccordion: React.FC<ComponentProps> = ({products}) => {
+    const navigate = useNavigate()
     return(
         <>
             {products.map((product, index) => (
@@ -23,7 +25,11 @@ const ProductsAccordion: React.FC<ComponentProps> = ({products}) => {
                 </AccordionSummary>
                 <Divider sx={{bgcolor:'secondary.dark'}}/>
                 <AccordionActions sx={{display:"flex", justifyContent:'center', gap:10, bgcolor:'secondary.light'}}>
-                        <Button variant="contained" color="error">Delete</Button>
+                        <Button 
+                        variant="contained" 
+                        color="error"
+                        onClick={() => navigate(`deleteProduct/${product.id}/${product.name}`)}
+                        >Delete</Button>
                         <Button variant="contained" color="success">Edit</Button>
                 </AccordionActions>
                 </Accordion>
