@@ -29,8 +29,16 @@ const ProductsAccordion: React.FC<ComponentProps> = ({products}) => {
                         variant="contained" 
                         color="error"
                         onClick={() => navigate(`deleteProduct/${product.id}/${product.name}`)}
-                        >Delete</Button>
-                        <Button variant="contained" color="success">Edit</Button>
+                        >
+                            Delete
+                        </Button>
+                        <Button 
+                        variant="contained" 
+                        color="success"
+                        onClick={() => navigate(`editProduct/${product.id}`)}
+                        >
+                            Edit
+                        </Button>
                 </AccordionActions>
                 </Accordion>
             ))}

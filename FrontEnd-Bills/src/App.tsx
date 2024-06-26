@@ -18,6 +18,7 @@ import { AddSubcatOutModal } from './Routes/CategoriesOutcomePage/Components/Sub
 import { DeleteSubcatOutModal } from './Routes/CategoriesOutcomePage/Components/SubcatModal/DeleteSubcatOutModal';
 import { AddProductModal } from './Routes/CategoriesOutcomePage/Components/ProductModal/AddProductModal';
 import { DeleteProductModal } from './Routes/CategoriesOutcomePage/Components/ProductModal/DeleteProductModal';
+import { PatchProductModal } from './Routes/CategoriesOutcomePage/Components/ProductModal/PatchProductModal';
 
 const theme = createTheme({
   palette: {
@@ -44,6 +45,7 @@ function App() {
                 <Route path='addCatOutcome' element={<AddCatOutcomeModal/>}/>
                 <Route path='addSubcatOutcome/:idCatOut/:nameCatOut' element={<AddSubcatOutModal/>}/>
                 <Route path='addProduct/:idSubcat/:nameSubcatOut' element={<AddProductModal/>}/>
+                <Route path='editProduct/:idProduct' element={<PatchProductModal/>}/>
                 <Route path='deleteProduct/:idProduct/:nameProduct' element={<DeleteProductModal/>}/>
               </Route>
               <Route path='bills-managment' element={<BillsPage/>}/>

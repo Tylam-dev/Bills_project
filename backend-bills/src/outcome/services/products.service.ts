@@ -61,7 +61,13 @@ export class ProductsService {
         throw new Error('Subcategory Not Found');
       }
       this.productRepo.merge(product, subCategory);
+    }else {
+      const update: Omit<UpdateProductDto, "subCategoryId"> = {
+        ...updateProductDto
+      }
+      this.productRepo.merge(product, update);
     }
+
     return this.productRepo.save(product);
   }
 
