@@ -12,6 +12,8 @@ import { AddIncomeModal } from './Routes/IncomeManagmentPage/Components/AddIncom
 import { DeleteIncomeModal } from './Routes/IncomeManagmentPage/Components/DeleteIncomeModal';
 import { EditIncomeModal } from './Routes/IncomeManagmentPage/Components/EditIncomeModal';
 import { DeleteCatIncomeModal } from './Routes/IncomeManagmentPage/Components/DeleteCatIncomeModal';
+import { AddCatOutcomeModal } from './Routes/CategoriesOutcomePage/Components/AddCatOutcomeModal';
+import { DeleteCatOutcome } from './Routes/CategoriesOutcomePage/Components/DeleteCatOutcome';
 
 const theme = createTheme({
   palette: {
@@ -32,7 +34,10 @@ function App() {
         <HashRouter basename='/'>
           <Routes>
             <Route path='/' element={<Layer/>}>
-              <Route path='outcome-managment' element={<CategoriesOutcomePage/>}/>
+              <Route path='outcome-managment' element={<CategoriesOutcomePage/>}>
+                <Route path='deleteCatOutcome/:idCatOut/:nameCatOut' element={<DeleteCatOutcome/>}/>
+                <Route path='addCatOutcome' element={<AddCatOutcomeModal/>}/>
+              </Route>
               <Route path='bills-managment' element={<BillsPage/>}/>
               <Route path='income-managment' element={<IncomeManagmentPage/>}>
                 <Route path='addCatIncome' element={<AddCatIncomeModal/>}/>

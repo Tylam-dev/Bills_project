@@ -13,3 +13,5 @@ export interface Product {
     id: number;
     name: string;
 }
+
+export interface PostCatOutcome extends Partial<Omit<CategoriesOutcome, "id" | "subcategoriesId">> {}

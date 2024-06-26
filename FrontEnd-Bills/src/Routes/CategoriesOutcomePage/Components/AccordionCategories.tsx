@@ -3,22 +3,16 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AccordionActions, Button, Divider } from '@mui/material';
-import { CatOutcomeHook } from '../../../customHooks/CatOutcomeHook';
-import { useEffect, useState } from 'react';
-import { CategoriesOutcome } from '../../../interfaces/CategoriesOutcome';
 import { SubcategoriesAccordion } from './Subcategories';
+import { CategoriesOutcome } from '../../../interfaces/CategoriesOutcome';
+import { useNavigate } from 'react-router-dom';
 
+interface ComponentProps {
+    data: CategoriesOutcome[]
+}
 
-const CategoriesAccordion:React.FC = () => {
-    const { fetchGetCategoriesOutcome } = CatOutcomeHook()
-    const [data, setData] = useState<[] | CategoriesOutcome[]>([])
-    useEffect(() => {
-        const getData = async() => {
-            const data = await fetchGetCategoriesOutcome()
-            setData(data)
-        }
-        getData()
-    },[])
+const CategoriesAccordion:React.FC<ComponentProps> = ({data}) => {
+    const navigate = useNavigate()
     return(
         <>
             {data.map((category, index) => (
@@ -38,7 +32,11 @@ const CategoriesAccordion:React.FC = () => {
                 <AccordionActions sx={{display:"flex", justifyContent:'center', gap:10, bgcolor:'secondary.light'}}>
                     <Button variant="contained">Add Subcategory</Button>
                     {(category.subcategoriesId.length === 0)?
-                    <Button variant="contained" color='error'>Delete Category</Button>
+                    <Button 
+                    variant="contained" 
+                    color='error'
+                    onClick={() => navigate(`deleteCatOutcome/${category.id}/${category.name}`)}
+                    >Delete Category</Button>
                     :
                     ""
                     }

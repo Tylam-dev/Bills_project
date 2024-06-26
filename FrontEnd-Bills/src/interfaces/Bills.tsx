@@ -6,3 +6,5 @@ export interface Bill {
     date: string;
     ProductsId?: Product[]
 }
+
+export interface PostBill extends Omit<Bill, "id">  {} 

@@ -1,4 +1,4 @@
-import { Bill } from "../interfaces/Bills"
+import { Bill, PostBill } from "../interfaces/Bills"
 
 const BillServiceHook = () => {
 
@@ -11,7 +11,22 @@ const BillServiceHook = () => {
             throw new Error('Error Fetching')
         }
     }
-    return{fetchGetBills}
+    async function postBill(data :PostBill) {
+        const dataStringiied = JSON.stringify(data)
+        try {
+            await fetch(`http://localhost:3000/bills`,
+            {
+                method: 'POST',
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: dataStringiied
+            })
+        } catch (error) {
+            throw new Error(`${error}`)
+        }
+    }
+    return{fetchGetBills, postBill}
 }
 
 export {BillServiceHook}

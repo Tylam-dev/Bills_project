@@ -8,20 +8,25 @@ import dayjs from "dayjs";
 import { BillServiceHook } from "../../customHooks/BillsServiceHook";
 
 interface FromToDate {
-    from: string,
-    to: string
+    from?: string,
+    to?: string
 }
 
 const BillsPage: React.FC = () => {
     const [bills, setBills] = useState<Bill[] | []>([])
-    const [ date, setDate ] = useState<FromToDate>({from:'', to:''})
-    const { fetchGetBills } = BillServiceHook()
+    const [ date, setDate ] = useState<FromToDate>({})
+    const [error, setError] = useState<boolean>(false)
+    const { fetchGetBills, postBill } = BillServiceHook()
 
     const getData = async() => {
-        const data:Bill[] = await fetchGetBills(date.from, date.to)
-        setBills(data)
+        if (date.from && date.to) {
+            const data:Bill[] = await fetchGetBills(date.from, date.to)
+            setBills(data)
+            setError(false)
+        }else {
+            setError(true)
+        }
     }
-    console.log(date)
     return(
         <>
             <Box marginY={2} paddingX={2} display={"flex"} justifyContent={'space-between'}>
