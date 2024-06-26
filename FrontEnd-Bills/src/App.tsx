@@ -14,6 +14,7 @@ import { EditIncomeModal } from './Routes/IncomeManagmentPage/Components/EditInc
 import { DeleteCatIncomeModal } from './Routes/IncomeManagmentPage/Components/DeleteCatIncomeModal';
 import { AddCatOutcomeModal } from './Routes/CategoriesOutcomePage/Components/AddCatOutcomeModal';
 import { DeleteCatOutcome } from './Routes/CategoriesOutcomePage/Components/DeleteCatOutcome';
+import { AddSubcatOutModal } from './Routes/CategoriesOutcomePage/Components/AddSubcatOutModal';
 
 const theme = createTheme({
   palette: {
@@ -37,6 +38,7 @@ function App() {
               <Route path='outcome-managment' element={<CategoriesOutcomePage/>}>
                 <Route path='deleteCatOutcome/:idCatOut/:nameCatOut' element={<DeleteCatOutcome/>}/>
                 <Route path='addCatOutcome' element={<AddCatOutcomeModal/>}/>
+                <Route path='addSubcatOutcome/:idCatOut/:nameCatOut' element={<AddSubcatOutModal/>}/>
               </Route>
               <Route path='bills-managment' element={<BillsPage/>}/>
               <Route path='income-managment' element={<IncomeManagmentPage/>}>
