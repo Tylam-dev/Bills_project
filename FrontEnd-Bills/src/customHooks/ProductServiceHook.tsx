@@ -1,6 +1,15 @@
 import { PostProduct } from "../interfaces/CategoriesOutcome"
 
 const ProductServiceHook = () => {
+    async function getProducts() {
+        try {
+            const response = await fetch(`http://localhost:3000/products`)
+            const data = response.json()
+            return data
+        } catch (error) {
+            throw new Error(`${error}`)
+        }
+    }
     async function getProduct(id: string) {
         try {
             const response = await fetch(`http://localhost:3000/products/${id}`)
@@ -54,7 +63,7 @@ const ProductServiceHook = () => {
             throw new Error(`${error}`)
         }
     }
-    return {postProduct ,deleteProduct, getProduct, patchProduct}
+    return {postProduct ,deleteProduct, getProduct, patchProduct, getProducts}
 }
 
 export {ProductServiceHook}

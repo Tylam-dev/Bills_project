@@ -7,11 +7,11 @@ import { BillsPage } from './Routes/BillsPage/Index';
 import { IncomeManagmentPage } from './Routes/IncomeManagmentPage/Index';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { AddCatIncomeModal } from './Routes/IncomeManagmentPage/Components/AddCatIncomeModal';
-import { AddIncomeModal } from './Routes/IncomeManagmentPage/Components/AddIncomeModal';
-import { DeleteIncomeModal } from './Routes/IncomeManagmentPage/Components/DeleteIncomeModal';
-import { EditIncomeModal } from './Routes/IncomeManagmentPage/Components/EditIncomeModal';
-import { DeleteCatIncomeModal } from './Routes/IncomeManagmentPage/Components/DeleteCatIncomeModal';
+import { AddCatIncomeModal } from './Routes/IncomeManagmentPage/Components/CatIncomeModal/AddCatIncomeModal';
+import { AddIncomeModal } from './Routes/IncomeManagmentPage/Components/IncomeModal/AddIncomeModal';
+import { DeleteIncomeModal } from './Routes/IncomeManagmentPage/Components/IncomeModal/DeleteIncomeModal';
+import { EditIncomeModal } from './Routes/IncomeManagmentPage/Components/IncomeModal/EditIncomeModal';
+import { DeleteCatIncomeModal } from './Routes/IncomeManagmentPage/Components/CatIncomeModal/DeleteCatIncomeModal';
 import { AddCatOutcomeModal } from './Routes/CategoriesOutcomePage/Components/CatOutModal/AddCatOutcomeModal';
 import { DeleteCatOutcome } from './Routes/CategoriesOutcomePage/Components/CatOutModal/DeleteCatOutcome';
 import { AddSubcatOutModal } from './Routes/CategoriesOutcomePage/Components/SubcatModal/AddSubcatOutModal';
@@ -19,6 +19,8 @@ import { DeleteSubcatOutModal } from './Routes/CategoriesOutcomePage/Components/
 import { AddProductModal } from './Routes/CategoriesOutcomePage/Components/ProductModal/AddProductModal';
 import { DeleteProductModal } from './Routes/CategoriesOutcomePage/Components/ProductModal/DeleteProductModal';
 import { PatchProductModal } from './Routes/CategoriesOutcomePage/Components/ProductModal/PatchProductModal';
+import { AddBillModal } from './Routes/BillsPage/Components/BillsModal/AddBillModal';
+import { BillModal } from './Routes/BillsPage/Components/BillsModal/BillModal';
 
 const theme = createTheme({
   palette: {
@@ -48,7 +50,10 @@ function App() {
                 <Route path='editProduct/:idProduct' element={<PatchProductModal/>}/>
                 <Route path='deleteProduct/:idProduct/:nameProduct' element={<DeleteProductModal/>}/>
               </Route>
-              <Route path='bills-managment' element={<BillsPage/>}/>
+              <Route path='bills-managment' element={<BillsPage/>}>
+                <Route path='addBill' element={<AddBillModal/>}/>
+                <Route path='Bill/:idBill/:billDescript' element={<BillModal/>}/>
+              </Route>
               <Route path='income-managment' element={<IncomeManagmentPage/>}>
                 <Route path='addCatIncome' element={<AddCatIncomeModal/>}/>
                 <Route path='addIncome/:catInId' element={<AddIncomeModal/>}/>

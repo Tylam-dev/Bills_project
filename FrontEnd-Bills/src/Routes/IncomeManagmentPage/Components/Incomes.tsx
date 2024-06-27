@@ -25,6 +25,9 @@ const Incomes: React.FC<ComponentsProps> = ({incomes}) => {
                         {income.description}
                     </Typography>
                     <Typography>
+                        <strong>Mount: </strong>${income.mount}
+                    </Typography>
+                    <Typography>
                         <strong>Date:</strong> {income.date}
                     </Typography>
                 </Box>

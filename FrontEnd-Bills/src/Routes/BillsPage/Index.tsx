@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Bill } from "../../interfaces/Bills";
 import dayjs from "dayjs";
 import { BillServiceHook } from "../../customHooks/BillsServiceHook";
+import { Outlet, useNavigate } from "react-router-dom";
 
 interface FromToDate {
     from?: string,
@@ -16,8 +17,8 @@ const BillsPage: React.FC = () => {
     const [bills, setBills] = useState<Bill[] | []>([])
     const [ date, setDate ] = useState<FromToDate>({})
     const [error, setError] = useState<boolean>(false)
-    const { fetchGetBills, postBill } = BillServiceHook()
-
+    const { fetchGetBills } = BillServiceHook()
+    const navigate = useNavigate()
     const getData = async() => {
         if (date.from && date.to) {
             const data:Bill[] = await fetchGetBills(date.from, date.to)
@@ -33,7 +34,10 @@ const BillsPage: React.FC = () => {
                 <Typography color={'secondary'} variant="h4">
                     Bills
                 </Typography>
-                <Button variant="contained">
+                <Button 
+                variant="contained"
+                onClick={() => navigate('addBill')}
+                >
                     <AddIcon/>
                 </Button>
             </Box>
@@ -65,6 +69,7 @@ const BillsPage: React.FC = () => {
                 </Button>
             </Box>
             <BillsAccordion bills={bills}/>
+            <Outlet/>
         </>
     )
 }

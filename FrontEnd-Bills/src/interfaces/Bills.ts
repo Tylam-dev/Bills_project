@@ -7,4 +7,15 @@ export interface Bill {
     ProductsId?: Product[]
 }
 
-export interface PostBill extends Omit<Bill, "id">  {} 
+export interface PostBill extends Partial<Omit<Bill, "id" | "ProductsId">>  {} 
+
+export interface ProductToBill {
+    quatity: string;
+    billId: string;
+    productId: string;
+    costUnit: string;
+}
+
+export interface ProductToBillWithId extends ProductToBill {
+    nameProduct?: string
+}

@@ -11,7 +11,7 @@ export interface SubcategoriesOutcome {
 }
 
 export interface Product {
-    id: number;
+    id: string;
     name: string;
 }
 
