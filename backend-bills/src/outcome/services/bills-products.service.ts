@@ -19,6 +19,15 @@ export class BillsProductsService {
     private readonly productRepo: Repository<Product>,
   ) {}
 
+  async findOne(id: number) {
+    return await this.billsProductsRepo.findOne({
+      where: {
+        id: id,
+      },
+      relations:['productId']
+    });
+  }
+
   async create(createBillsProductsDto: CreateBillsProductsDto) {
     const bill = await this.billRepo.findOne({
       where: {
@@ -69,6 +78,10 @@ export class BillsProductsService {
       });
       this.billsProductsRepo.merge(billProduct, product)
     }
+    this.billsProductsRepo.merge(billProduct, {
+      quantity: updateBillsProductsDto.quantity,
+      costUnit: updateBillsProductsDto.costUnit
+    })
     return this.billsProductsRepo.save(billProduct);
   }
 

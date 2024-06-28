@@ -31,7 +31,7 @@ const AddBillModal = () => {
         if (bill) {
             try{
                 const billCreated = await postBill({...bill})
-                navigate(`/bills-managment/Bill/${billCreated.id}/${billCreated.description}`)
+                navigate(`/bills-managment/Bill/${billCreated.id}/`)
             }catch(error){
                 console.error(error)
             }

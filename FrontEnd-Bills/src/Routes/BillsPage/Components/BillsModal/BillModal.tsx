@@ -1,9 +1,9 @@
-import { Box, Button, Modal, TextField, Typography } from "@mui/material"
-import { useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { ProductToBill, ProductToBillWithId } from "../../../../interfaces/Bills";
+import { Box, Button, Modal, Typography } from "@mui/material"
+import { useEffect, useState } from "react"
+import { Outlet, useNavigate, useParams } from "react-router-dom"
+import { Bill} from "../../../../interfaces/Bills";
 import { BillServiceHook } from "../../../../customHooks/BillsServiceHook";
-import { ProductOfBillModal } from "./ProductOfBillModal";
+import Loading from "../../../../GlobalComponents/Loading";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -20,33 +20,36 @@ const style = {
 
 const BillModal = () => {
     const [open] = useState<boolean>(true)
-    const [showProductDetail, setShowProductDetail] = useState<boolean>(true)
-    const { billDescript, idBill} = useParams()
-    const [products, setProducts] = useState<ProductToBillWithId[] | []>([])
-    const {postProdutToBill} = BillServiceHook()
+    const [loading, setLoading] = useState<boolean>(true)
+    const {idBill} = useParams()
+    const [bill, setBill] = useState<Bill>({})
+    const {getBill} = BillServiceHook()
     const navigate = useNavigate()
 
+
+    useEffect(() => {
+        const getDataBill = async() => {
+            if (idBill) {
+                const response = await getBill(idBill)
+                setBill(response)
+                setLoading(false)
+            }
+            
+        }
+        getDataBill()
+    })
     const handleClose = () => {
         navigate("/bills-managment")
     };
-    const submitBill = async() => {
-        if (products) {
-            try{
-                for(const product of products){
-                    await postProdutToBill(product)
-                }
-            }catch(error){
-                console.error(error)
-            }
-        }
-    }
 
-    const getTotalProducts = (data:ProductToBillWithId[]): number => {
-        const totalProducts = data.reduce((acum, value) => {
-            const total = Number(value.costUnit) * Number(value.quatity)
-            return acum + total
-        },0)
-        return totalProducts
+    const getTotalCost = (costU: string = "0", quantity: string = "0"): string => {
+        const total = Number(costU) * Number(quantity)
+        return total.toFixed(2)
+    }
+    if (loading) {
+        return (
+            <Loading/>
+        )
     }
     return (
         <>
@@ -58,16 +61,17 @@ const BillModal = () => {
         >
         <Box sx={style}>
             <Typography color={'primary.main'} id="modal-modal-title" variant="h4" component="h2">
-            {billDescript} bill
+            {bill.description!} bill
             </Typography>
             <Box display={'flex'} justifyContent={"space-between"} my={2} gap={2}> 
                 <Typography variant="h6" width={"45%"}>Product</Typography>
-                <Typography variant="h6" width={"15%"}>Units</Typography>
-                <Typography variant="h6" width={"15%"}>C/U</Typography>
-                <Typography variant="h6" width={"22%"}>Total</Typography>
+                <Typography textAlign={'end'} variant="h6" width={"15%"}>Units</Typography>
+                <Typography textAlign={'end'} variant="h6" width={"15%"}>C/U</Typography>
+                <Typography textAlign={'end'} variant="h6" width={"22%"}>Total</Typography>
             </Box>
+            <Box height={2} bgcolor={"primary.light"}/>
             <Box display={'flex'} flexDirection={"column"} gap={2} maxHeight={300} overflow={"auto"}>
-                {products.map((product, index) => (
+                {bill.productsId?.map((order, index) => (
                     <Box 
                     sx={{":hover":{bgcolor:"secondary.light"}, cursor:'pointer'}} 
                     height={40} 
@@ -75,38 +79,33 @@ const BillModal = () => {
                     display={'flex'}
                     alignItems={'center'}
                     justifyContent={"space-between"}
+                    onClick={() => navigate(`editProductBill/${order.id}/${order.productId?.name}`)}
                     >
-                        <Typography width={"45%"}>{product.nameProduct}</Typography>
-                        <Typography width={"15%"}>{product.quatity}</Typography>
-                        <Typography width={"15%"}>${product.costUnit}</Typography>
-                        <Typography width={"22%"}>${Number(product.quatity) * Number(product.costUnit)}</Typography>
+                        <Typography width={"45%"}>{order.productId?.name}</Typography>
+                        <Typography textAlign={'end'} width={"15%"}>{order.quantity}</Typography>
+                        <Typography textAlign={'end'} width={"15%"}>${order.costUnit}</Typography>
+                        <Typography textAlign={'end'} width={"22%"}>${getTotalCost(order.costUnit, order.quantity)}</Typography>
                     </Box>
                 ))}
             </Box>
+            <Box height={2} bgcolor={"primary.light"}/>
             <Box textAlign={'center'} mt={3}>
-                <Typography>Total: ${getTotalProducts(products)}</Typography>
+                <Typography>Total: ${bill.total}</Typography>
             </Box>
-            <Box display={'flex'} justifyContent={'space-between'} mt={3}>
+            <Box display={'flex'} justifyContent={'center'} mt={3}>
                 <Button 
                 sx={{height: 57}} 
                 variant="contained"
-                onClick={submitBill}
-                >
-                    Save
-                </Button>
-                <Button 
-                sx={{height: 57}} 
-                variant="contained"
-                onClick={() => setShowProductDetail(true)}
+                onClick={() => navigate(`addProductBill`)}
                 >
                     Add product
                 </Button>
             </Box>
         </Box>
         </Modal>
-        {showProductDetail && <ProductOfBillModal setShowProductDetail={setShowProductDetail} setProducts={setProducts} products={products} />}
+        <Outlet/>
         </>
-)
+    )
 }
 
 export {BillModal}

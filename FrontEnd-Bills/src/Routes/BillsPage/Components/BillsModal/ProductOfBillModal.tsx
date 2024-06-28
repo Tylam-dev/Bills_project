@@ -2,10 +2,10 @@ import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import AddIcon from '@mui/icons-material/Add';
-import { PostBill, ProductToBillWithId } from "../../../../interfaces/Bills";
+import { PostProductBill} from "../../../../interfaces/Bills";
 import { BillServiceHook } from "../../../../customHooks/BillsServiceHook";
-import dayjs from "dayjs";
 import { ProductsAutofill } from "./ProductsAutofill";
+import { hasEmptyFields } from "../../../../utils/functions/hasEmptyFields";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -18,26 +18,29 @@ const style = {
     boxShadow: 24,
     p: 4
   };
-interface ComponentProps {
-    setShowProductDetail: React.Dispatch<React.SetStateAction<boolean>>
-    setProducts: React.Dispatch<React.SetStateAction<ProductToBillWithId[]>>
-    products: ProductToBillWithId[]
-}
-const ProductOfBillModal:React.FC<ComponentProps> = ({setShowProductDetail, setProducts, products}) => {
+
+const ProductOfBillModal = () => {
     const [open] = useState<boolean>(true)
     const {idBill} = useParams()
-    const [item, setItem] = useState<ProductToBillWithId>({nameProduct: '', quatity: '', billId: idBill!, productId: "", costUnit: ""})
-    const {postBill} = BillServiceHook()
+    const [item, setItem] = useState<PostProductBill>({ quantity: '', billId: idBill!, costUnit: ""})
+    const [error, setError] = useState<boolean>(false)
+    const {postProductBill} = BillServiceHook()
     const navigate = useNavigate()
 
-    const handleClose = () => {
-        setShowProductDetail(false)
+    const handleCloseReload = () => {
+        navigate(`/bills-managment/Bill/${idBill}/`)
+        window.location.reload()
     };
-    const addProduct = (data: ProductToBillWithId) => {
-        const productsUpdated:ProductToBillWithId[] = [...products]
-        productsUpdated.push(data)
-        setProducts(productsUpdated)
-        setShowProductDetail(false)
+    const handleClose = () => {
+        navigate(`/bills-managment/Bill/${idBill}/`)
+    };
+    const submitProductBill = async(data: PostProductBill) => {
+        if (hasEmptyFields(item)) {
+            setError(true)
+        }else {
+            await postProductBill(data)
+            handleCloseReload()
+        }
     }
     return(
         <>
@@ -51,17 +54,21 @@ const ProductOfBillModal:React.FC<ComponentProps> = ({setShowProductDetail, setP
                 <Typography mb={2} color={'primary.main'} id="modal-modal-title" variant="h5">
                 Add product to bill
                 </Typography>
-                <ProductsAutofill setItem={setItem} item={item}/>
+                <ProductsAutofill setItem={setItem} item={item} idBill={idBill}/>
                 <TextField 
+                required
+                error={error}
                 fullWidth
                 sx={{mt: 3}}
                 type="number"
                 id="outlined-basic" 
                 label="Quantity" 
                 variant="outlined"
-                onChange={(e) => setItem({...item, quatity: e.target.value})}
+                onChange={(e) => setItem({...item, quantity: e.target.value})}
                 />
                 <TextField 
+                required
+                error={error}
                 fullWidth
                 sx={{mt: 3}}
                 type="number"
@@ -70,11 +77,14 @@ const ProductOfBillModal:React.FC<ComponentProps> = ({setShowProductDetail, setP
                 variant="outlined"
                 onChange={(e) => setItem({...item, costUnit: e.target.value})}
                 />
-                <Box display={'flex'} justifyContent={'center'} mt={3}>
+                <Box mt={1} textAlign={'center'}>
+                    {error && <Typography color={"error"}> Filled required camps*</Typography>}
+                </Box>
+                <Box display={'flex'} justifyContent={'center'} mt={2}>
                     <Button 
                     sx={{height: 57}} 
                     variant="contained"
-                    onClick={() => addProduct(item)}
+                    onClick={() => submitProductBill(item)}
                     >
                         <AddIcon/>
                     </Button>

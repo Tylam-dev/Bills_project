@@ -1,4 +1,4 @@
-import { Bill, PostBill, ProductToBill } from "../interfaces/Bills"
+import { Bill, PostBill, PostProductBill, ProductBill } from "../interfaces/Bills"
 
 const BillServiceHook = () => {
 
@@ -11,7 +11,25 @@ const BillServiceHook = () => {
             throw new Error('Error Fetching')
         }
     }
-    async function postProdutToBill(data: ProductToBill) {
+    async function getBill(id:string):Promise<Bill> {
+        try {
+            const response = await fetch(`http://localhost:3000/bills/${id}`)
+            const data:Bill = await response.json()
+            return data
+        } catch (error) {
+            throw new Error('Error Fetching')
+        }
+    }
+    async function getProductBill(id:string):Promise<ProductBill> {
+        try {
+            const response = await fetch(`http://localhost:3000/bills-products/${id}`)
+            const data: ProductBill = await response.json()
+            return data
+        } catch (error) {
+            throw new Error('Error Fetching')
+        }
+    }
+    async function postProductBill(data: PostProductBill) {
         const dataStringified = JSON.stringify(data)
         try {
             fetch(`http://localhost:3000/bills-products`,
@@ -26,6 +44,33 @@ const BillServiceHook = () => {
             throw new Error(`${error}`)
         }
     }
+    async function patchProductBill(id: string, data: PostProductBill) {
+        const dataStringified = JSON.stringify(data)
+        try {
+            fetch(`http://localhost:3000/bills-products/${id}`,
+            {
+                method: 'PATCH',
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: dataStringified
+            })
+        } catch (error) {
+            throw new Error(`${error}`)
+        }
+    }
+    
+    async function deleteProductBill(id: string) {
+        try {
+            fetch(`http://localhost:3000/bills-products/${id}`,
+            {
+                method: 'DELETE'
+            })
+        } catch (error) {
+            throw new Error(`${error}`)
+        }
+    }
+
     async function postBill(data :PostBill): Promise<Bill> {
         const dataStringified = JSON.stringify(data)
         try {
@@ -43,7 +88,7 @@ const BillServiceHook = () => {
             throw new Error(`${error}`)
         }
     }
-    return{fetchGetBills, postBill, postProdutToBill}
+    return{fetchGetBills, postBill, postProductBill, getBill, getProductBill, patchProductBill, deleteProductBill}
 }
 
 export {BillServiceHook}

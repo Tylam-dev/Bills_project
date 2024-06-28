@@ -1,10 +1,10 @@
-import { PostProduct } from "../interfaces/CategoriesOutcome"
+import { PostProduct, Product } from "../interfaces/CategoriesOutcome"
 
 const ProductServiceHook = () => {
-    async function getProducts() {
+    async function getProducts(): Promise<Product[]> {
         try {
             const response = await fetch(`http://localhost:3000/products`)
-            const data = response.json()
+            const data:Product[] = await response.json()
             return data
         } catch (error) {
             throw new Error(`${error}`)

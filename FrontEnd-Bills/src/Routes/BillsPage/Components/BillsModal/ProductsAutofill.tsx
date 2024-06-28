@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 import { Product } from '../../../../interfaces/CategoriesOutcome';
 import { ProductServiceHook } from '../../../../customHooks/ProductServiceHook';
 import { Paper } from '@mui/material';
-import { ProductToBillWithId } from '../../../../interfaces/Bills';
+import { PostProductBill } from '../../../../interfaces/Bills';
+import { BillServiceHook } from '../../../../customHooks/BillsServiceHook';
 
 const CustomPaperComponent = (props: any) => (
     <Paper
@@ -18,29 +19,33 @@ const CustomPaperComponent = (props: any) => (
   );
 
 interface ComponentProps {
-    setItem: React.Dispatch<React.SetStateAction<ProductToBillWithId>>,
-    item: ProductToBillWithId
+    setItem: React.Dispatch<React.SetStateAction<PostProductBill>>,
+    item?: PostProductBill
+    idBill?: string
 }
-const ProductsAutofill: React.FC<ComponentProps> = ({setItem, item}) => {
+const ProductsAutofill: React.FC<ComponentProps> = ({setItem, item, idBill}) => {
     const [products, setProducts] = useState<Product[] | []>([])
-    const [productSelect, setProductSelect] = useState<Product | null>(null)
+    const { getBill } = BillServiceHook()
     const { getProducts } = ProductServiceHook()
+
+    //Agregar filtro para no repetir productos
     useEffect(() => {
-        const setData = async() => {
-            const getData = await getProducts()
-            setProducts(getData)
-        }
-        setData()
-    },[])
-    useEffect(() => {
-        if (productSelect != null) {
-            const newItem: Partial<ProductToBillWithId> = {
-                nameProduct: productSelect.name,
-                productId: productSelect.id
+        if(idBill) {
+            const setFilteredProductsOptions = async() => {
+                const arrayProducts = await getProducts()
+                const productsOfBill = (await getBill(idBill)).productsId?.map((product) => product.productId?.name || "")
+                const filterProducts = arrayProducts.filter((product) => !productsOfBill?.includes(product.name))
+                setProducts(filterProducts)
             }
-            setItem({...item, ...newItem})
+            setFilteredProductsOptions()
+        } else {
+            const setProductsOptions = async() => {
+                const arrayProducts = await getProducts()
+                setProducts(arrayProducts)
+            } 
+            setProductsOptions()
         }
-    },[productSelect])
+    },[])
     return (
         <Autocomplete
         fullWidth
@@ -48,8 +53,8 @@ const ProductsAutofill: React.FC<ComponentProps> = ({setItem, item}) => {
         id="combo-box-demo"
         options={products}
         getOptionLabel={(option) => option.name}
-        renderInput={(params) => <TextField {...params} label="Product" />}
-        onChange={(_, newValue) => setProductSelect(newValue)}
+        renderInput={(params) => <TextField {...params} label="Product*" />}
+        onChange={(_, newValue) => setItem({... item, productId: newValue?.id})}
         PaperComponent={CustomPaperComponent}
         />
       ); 

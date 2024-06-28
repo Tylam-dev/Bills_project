@@ -3,7 +3,7 @@ import {  IsNotEmpty, IsNumber } from 'class-validator';
 export class CreateBillsProductsDto {
   @IsNotEmpty()
   @IsNumber()
-  quatity: number;
+  quantity: number;
 
   @IsNotEmpty()
   @IsNumber()

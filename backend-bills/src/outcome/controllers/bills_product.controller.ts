@@ -13,11 +13,16 @@ import { BillsProductsService } from '../services/bills-products.service';
 
 @Controller('bills-products')
 export class BillsProductController {
-  constructor(private readonly categoriesBillsService: BillsProductsService) {}
+  constructor(private readonly billsProductService: BillsProductsService) {}
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.billsProductService.findOne(+id);
+  }
 
   @Post()
   create(@Body() createOutcomeDto: CreateBillsProductsDto) {
-    return this.categoriesBillsService.create(createOutcomeDto);
+    return this.billsProductService.create(createOutcomeDto);
   }
 
   @Patch(':id')
@@ -25,11 +30,11 @@ export class BillsProductController {
     @Param('id') id: string,
     @Body() updateOutcomeDto: UpdateBillsProductsDto,
   ) {
-    return this.categoriesBillsService.update(+id, updateOutcomeDto);
+    return this.billsProductService.update(+id, updateOutcomeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.categoriesBillsService.remove(+id);
+    return this.billsProductService.remove(+id);
   }
 }
