@@ -8,9 +8,9 @@ import { IncomeManagmentPage } from './Routes/IncomeManagmentPage/Index';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { AddCatIncomeModal } from './Routes/IncomeManagmentPage/Components/CatIncomeModal/AddCatIncomeModal';
-import { AddIncomeModal } from './Routes/IncomeManagmentPage/Components/IncomeModal/AddIncomeModal';
-import { DeleteIncomeModal } from './Routes/IncomeManagmentPage/Components/IncomeModal/DeleteIncomeModal';
-import { EditIncomeModal } from './Routes/IncomeManagmentPage/Components/IncomeModal/EditIncomeModal';
+import { AddIncomeModal } from './Routes/IncomesPage/IncomeModal/AddIncomeModal';
+import { DeleteIncomeModal } from './Routes/IncomesPage/IncomeModal/DeleteIncomeModal';
+import { EditIncomeModal } from './Routes/IncomesPage/IncomeModal/EditIncomeModal';
 import { DeleteCatIncomeModal } from './Routes/IncomeManagmentPage/Components/CatIncomeModal/DeleteCatIncomeModal';
 import { AddCatOutcomeModal } from './Routes/CategoriesOutcomePage/Components/CatOutModal/AddCatOutcomeModal';
 import { DeleteCatOutcome } from './Routes/CategoriesOutcomePage/Components/CatOutModal/DeleteCatOutcome';
@@ -23,6 +23,9 @@ import { AddBillModal } from './Routes/BillsPage/Components/BillsModal/AddBillMo
 import { BillModal } from './Routes/BillsPage/Components/BillsModal/BillModal';
 import { ProductOfBillModal } from './Routes/BillsPage/Components/BillsModal/ProductOfBillModal';
 import { EditProductBillModal } from './Routes/BillsPage/Components/BillsModal/EditProductBill';
+import { IncomePage } from './Routes/IncomesPage/Index';
+import { GraphPage } from './Routes/GraphsPage/Index';
+import { GraphBill } from './Routes/GraphsPage/Components/GraphBill';
 
 const theme = createTheme({
   palette: {
@@ -59,14 +62,18 @@ function App() {
                   <Route path='editProductBill/:idProductBill/:nameProduct' element={<EditProductBillModal/>}/>
                 </Route>
               </Route>
-              <Route path='income-managment' element={<IncomeManagmentPage/>}>
-                <Route path='addCatIncome' element={<AddCatIncomeModal/>}/>
-                <Route path='addIncome/:catInId' element={<AddIncomeModal/>}/>
+              <Route path='incomes' element={<IncomePage/>}>
+                <Route path='addIncome' element={<AddIncomeModal/>}/>
                 <Route path='editIncome/:idInc' element={<EditIncomeModal/>}/>
-                <Route path='deleteCatIncome/:idCatInc/:nameIn' element={<DeleteCatIncomeModal/>}/>
                 <Route path='deleteIncome/:idInc/:descripIn' element={<DeleteIncomeModal/>}/>
               </Route>
-              <Route path='incomes' element={<BillsPage/>}/>
+              <Route path='income-managment' element={<IncomeManagmentPage/>}>
+                <Route path='addCatIncome' element={<AddCatIncomeModal/>}/>
+                <Route path='deleteCatIncome/:idCatInc/:nameIn' element={<DeleteCatIncomeModal/>}/>
+              </Route>
+              <Route path='graphs' element={<GraphPage/>}>
+                <Route path='bill/:idBill' element={<GraphBill/>}/>
+              </Route>
             </Route>
           </Routes>
         </HashRouter>

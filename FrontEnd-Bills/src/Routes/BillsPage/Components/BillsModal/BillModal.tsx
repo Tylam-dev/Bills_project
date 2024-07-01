@@ -4,7 +4,7 @@ import { Outlet, useNavigate, useParams } from "react-router-dom"
 import { Bill} from "../../../../interfaces/Bills";
 import { BillServiceHook } from "../../../../customHooks/BillsServiceHook";
 import Loading from "../../../../GlobalComponents/Loading";
-
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -23,9 +23,8 @@ const BillModal = () => {
     const [loading, setLoading] = useState<boolean>(true)
     const {idBill} = useParams()
     const [bill, setBill] = useState<Bill>({})
-    const {getBill} = BillServiceHook()
+    const {getBill, deleteBill} = BillServiceHook()
     const navigate = useNavigate()
-
 
     useEffect(() => {
         const getDataBill = async() => {
@@ -37,11 +36,20 @@ const BillModal = () => {
             
         }
         getDataBill()
-    })
+    },[])
     const handleClose = () => {
         navigate("/bills-managment")
     };
 
+    const handleCloseReload = () => {
+        navigate("/bills-managment")
+        window.location.reload()
+    };
+
+    const submitDeleteBill = async(id: string) => {
+        await deleteBill(id)
+        handleCloseReload()
+    } 
     const getTotalCost = (costU: string = "0", quantity: string = "0"): string => {
         const total = Number(costU) * Number(quantity)
         return total.toFixed(2)
@@ -92,7 +100,23 @@ const BillModal = () => {
             <Box textAlign={'center'} mt={3}>
                 <Typography>Total: ${bill.total}</Typography>
             </Box>
-            <Box display={'flex'} justifyContent={'center'} mt={3}>
+            <Box display={'flex'} justifyContent={'space-around'} mt={3}>
+                <Button 
+                color="error"
+                sx={{height: 57}} 
+                variant="contained"
+                onClick={() => submitDeleteBill(idBill!)}
+                >
+                    Delete
+                </Button>
+                <Button 
+                color="primary"
+                sx={{height: 57}} 
+                variant="contained"
+                onClick={() => navigate(`/graphs/bill/${idBill}`)}
+                >
+                    <EqualizerIcon/>
+                </Button>
                 <Button 
                 sx={{height: 57}} 
                 variant="contained"

@@ -12,6 +12,7 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import PaidIcon from '@mui/icons-material/Paid';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import { useNavigate } from 'react-router-dom';
+import TollIcon from '@mui/icons-material/Toll';
 
 interface ChildComponentsProps {
     setOpenDrawer: React.Dispatch<React.SetStateAction<boolean>>,
@@ -20,6 +21,11 @@ interface ChildComponentsProps {
 const outcomeButtons = [
     { text: "Outcome Managment", icon: <EditNoteIcon />, link: 'outcome-managment' },
     { text: "Bills", icon: <ReceiptIcon/>, link: 'bills-managment' },
+]
+
+const incomeButtons = [
+  { text: "Income Managment", icon: <EditNoteIcon />, link: 'income-managment' },
+  { text: "Incomes", icon: <TollIcon/>, link: 'incomes' },
 ]
 
 const VerticalNav: React.FC<ChildComponentsProps> = ({setOpenDrawer, openDrawer}) => {
@@ -53,14 +59,16 @@ const VerticalNav: React.FC<ChildComponentsProps> = ({setOpenDrawer, openDrawer}
                 </ListItemIcon>
                 <ListItemText primary={"Income"} />
             </ListItem>
-            <ListItem disablePadding>
-                <ListItemButton onClick={() => navigate('income-managment')}>
-                  <ListItemIcon>
-                    <EditNoteIcon/>,
-                  </ListItemIcon>
-                  <ListItemText  secondary={'Income Managment'} />
-                </ListItemButton>
-              </ListItem>
+            {incomeButtons.map((obj, index) => (
+              <ListItem  key={index} disablePadding>
+              <ListItemButton onClick={() => navigate(obj.link)}>
+                <ListItemIcon>
+                  {obj.icon}
+                </ListItemIcon>
+                <ListItemText  secondary={obj.text} />
+              </ListItemButton>
+            </ListItem>
+            ))}
           </List>
         </Box>
       );

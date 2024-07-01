@@ -19,7 +19,7 @@ export class BillsProduct {
   @Column({ type: 'float', nullable: false, name: 'cost_unit' })
   costUnit: number;
 
-  @ManyToOne(() => Bill, (bill) => bill.productsId)
+  @ManyToOne(() => Bill, (bill) => bill.productsId, {onDelete:"CASCADE"})
   @JoinColumn({ name: 'bills_id' })
   billId: Bill;
 

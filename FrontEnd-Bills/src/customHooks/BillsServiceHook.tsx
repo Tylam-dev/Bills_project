@@ -88,7 +88,17 @@ const BillServiceHook = () => {
             throw new Error(`${error}`)
         }
     }
-    return{fetchGetBills, postBill, postProductBill, getBill, getProductBill, patchProductBill, deleteProductBill}
+    async function deleteBill(id :string) {
+        try {
+            await fetch(`http://localhost:3000/bills/${id}`,
+            {
+                method: 'DELETE'
+            })
+        } catch (error) {
+            throw new Error(`${error}`)
+        }
+    }
+    return{fetchGetBills, postBill, postProductBill, getBill, getProductBill, patchProductBill, deleteProductBill, deleteBill}
 }
 
 export {BillServiceHook}

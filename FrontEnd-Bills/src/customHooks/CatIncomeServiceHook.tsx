@@ -2,25 +2,14 @@ import { CategoriesIncome, PostCategoriesIncome } from "../interfaces/Categories
 
 const CatIncomeServiceHook = () => {
 
-    async function fetchGetCategoriesIncome(from?:string, to?:string):Promise<CategoriesIncome[]> {
-        if (from && to) {
-            try {
-                const response = await fetch(`http://localhost:3000/categories-income?from=${from}&to=${to}`)
-                const data:CategoriesIncome[] = await response.json()
-                return data
-            } catch (error) {
-                throw new Error('Error Fetching')
-            }
-        }else {
-            try {
-                const response = await fetch(`http://localhost:3000/categories-income`)
-                const data:CategoriesIncome[] = await response.json()
-                return data
-            } catch (error) {
-                throw new Error('Error Fetching')
-            }
+    async function fetchGetCategoriesIncome():Promise<CategoriesIncome[]> {
+        try {
+            const response = await fetch(`http://localhost:3000/categories-income`)
+            const data:CategoriesIncome[] = await response.json()
+            return data
+        } catch (error) {
+            throw new Error('Error Fetching')
         }
-
     }
 
     async function postCategoriesIncome(data: PostCategoriesIncome) {

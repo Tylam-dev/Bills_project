@@ -21,7 +21,8 @@ export class BillsService {
       return await this.billRepo.find({
         where:{
           date: Between(from,to)
-        }
+        },
+        relations: ["productsId"]
       });
     }
     return await this.billRepo.find();
@@ -32,7 +33,7 @@ export class BillsService {
       where: {
         id: id,
       },
-      relations:['productsId.productId', 'productsId']
+      relations:['productsId.productId', 'productsId', 'productsId.productId.subCategoryId']
     });
   }
 

@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';
-import { BillsAccordion } from "./Components/BillsAccordion";
+import { BillsList } from "./Components/BillsList";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useState } from "react";
 import { Bill } from "../../interfaces/Bills";
@@ -68,7 +68,8 @@ const BillsPage: React.FC = () => {
                     Buscar
                 </Button>
             </Box>
-            <BillsAccordion bills={bills}/>
+            {error && <Typography textAlign={'center'} color={"error"}> Filled required camps*</Typography>}
+            <BillsList bills={bills}/>
             <Outlet/>
         </>
     )

@@ -3,8 +3,9 @@ import { CreateIncomeDto } from '../dto/create-income.dto';
 import { UpdateIncomeDto } from '../dto/update-income.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Income } from '../entities/income.entity';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { CategoriesIncome } from '../entities/categories_income.entity';
+import { FilterIncomeDto } from '../dto/filter-income.dto';
 
 @Injectable()
 export class IncomeService {
@@ -30,7 +31,15 @@ export class IncomeService {
     return this.incomeRepo.save(income);
   }
 
-  findAll() {
+  findAll(params?: FilterIncomeDto) {
+    const {from, to} = params
+    if (from && to) {
+      return this.incomeRepo.find({
+        where: {
+          date: Between(from, to),
+        },
+      });
+    }
     return this.incomeRepo.find();
   }
 

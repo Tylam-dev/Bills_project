@@ -42,6 +42,26 @@ const IncomeServiceHook = () => {
             throw new Error('Error fetching')
         }
     }
+    async function getIncomes(from?: string, to?:string):Promise<Income[]> {
+        if (from && to) {
+            try {
+                const response = await fetch(`http://localhost:3000/income?from=${from}&to=${to}`)
+                const data: Income[] = await response.json()
+                return data
+            } catch (error) {
+                throw new Error('Error fetching')
+            }
+        } else {
+            try {
+                const response = await fetch(`http://localhost:3000/income`)
+                const data: Income[] = await response.json()
+                return data
+            } catch (error) {
+                throw new Error('Error fetching')
+            }
+        }
+
+    }
     async function deleteIncome(incomeId:string) {
         try {
             await fetch(`http://localhost:3000/income/${incomeId}`,
@@ -56,7 +76,7 @@ const IncomeServiceHook = () => {
                 console.log(error)
             }
     }
-    return{ postIncome, patchIncome, deleteIncome, getIncome}
+    return{ postIncome, patchIncome, deleteIncome, getIncome, getIncomes}
 }
 
 export{IncomeServiceHook}

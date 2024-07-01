@@ -4,7 +4,6 @@ import { UpdateCategoriesIncomeDto } from '../dto/update-categories_income.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoriesIncome } from '../entities/categories_income.entity';
 import { Between, Repository } from 'typeorm';
-import { FilterCategoriesIncomeDto } from '../dto/filter-categories_income.dto';
 
 @Injectable()
 export class CategoriesIncomeService {
@@ -19,20 +18,9 @@ export class CategoriesIncomeService {
     return this.categoryIncomeRepo.save(newCategory);
   }
 
-  findAll(filters?: FilterCategoriesIncomeDto) {
-    const { from, to } = filters
-    if (from && to) {
-      return this.categoryIncomeRepo.find({
-        where:{
-          incomeId: {
-            date: Between(from, to)
-          }
-        },
-        relations: ['incomeId']
-      });
-    }
+  findAll() {
     return this.categoryIncomeRepo.find({
-      relations: ['incomeId']
+      relations: ["incomeId"]
     });
   }
 

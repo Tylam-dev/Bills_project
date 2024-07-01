@@ -29,7 +29,7 @@ const [open] = useState<boolean>(true)
     useEffect(() => {
         if (idProduct) {
             const setData = async() => {
-                const { id, ...data }:Product = await getProduct(idProduct)
+                const { id, subCategoryId, ...data }:Product = await getProduct(idProduct)
                 setProduct(data)
                 setLoading(false)
             }
@@ -42,11 +42,11 @@ const [open] = useState<boolean>(true)
     },[])
 
     const handleCloseReload = () => {
-        navigate("/income-managment")
+        navigate("/outcome-managment")
         window.location.reload()
     };
     const handleClose = () => {
-        navigate("/income-managment")
+        navigate("/outcome-managment")
     };
     const submitPatchProduct = async() => {
         if (idProduct) {

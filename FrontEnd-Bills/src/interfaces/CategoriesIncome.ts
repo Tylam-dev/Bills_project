@@ -1,11 +1,11 @@
 export interface CategoriesIncome {
-    id: number;
+    id: string;
     name: string;
     incomeId: Income[]
 }
 
 export interface Income {
-    id: number,
+    id: string,
     description: string,
     mount: string
     date: string

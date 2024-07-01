@@ -1,7 +1,6 @@
 import { CategoriesIncome } from "../../../interfaces/CategoriesIncome"
-import { Accordion, AccordionActions, AccordionSummary, Button } from "@mui/material"
+import { Accordion, AccordionActions, AccordionSummary, Box, Button, Typography } from "@mui/material"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Incomes } from "./Incomes";
 import { useNavigate } from "react-router-dom";
 
 interface ComponentProps {
@@ -25,13 +24,10 @@ const CategoriesIncomeAccordion: React.FC<ComponentProps> = ({categoriesIncome})
                     >
                         {category.name}
                     </AccordionSummary>
-                    <Incomes incomes={category.incomeId}/>
                     <AccordionActions sx={{display:"flex", justifyContent:'center', gap:10, bgcolor:'secondary.light'}}>
-                    <Button 
-                    sx={{bgcolor:'primary.light'}} 
-                    variant="contained"
-                    onClick={() => navigate(`addIncome/${category.id}`)}
-                    >Add Income</Button>
+                        <Box>
+                            <Typography variant="h6" color={'primary.main'}>Delete all category's incomes to delete</Typography>
+                        </Box>
                     {(category.incomeId.length === 0)?
                     <Button
 

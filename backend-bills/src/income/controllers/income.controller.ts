@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { IncomeService } from '../services/income.service';
 import { CreateIncomeDto } from '../dto/create-income.dto';
 import { UpdateIncomeDto } from '../dto/update-income.dto';
+import { FilterIncomeDto } from '../dto/filter-income.dto';
 
 @Controller('income')
 export class IncomeController {
@@ -21,8 +23,8 @@ export class IncomeController {
   }
 
   @Get()
-  findAll() {
-    return this.incomeService.findAll();
+  findAll(@Query() params?: FilterIncomeDto) {
+    return this.incomeService.findAll(params);
   }
 
   @Get(':id')
