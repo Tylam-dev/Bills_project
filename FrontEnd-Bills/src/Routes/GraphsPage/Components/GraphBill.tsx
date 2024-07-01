@@ -3,6 +3,8 @@ import { BillServiceHook } from "../../../customHooks/BillsServiceHook"
 import { useEffect, useState } from "react"
 import { Bill } from "../../../interfaces/Bills"
 import Loading from "../../../GlobalComponents/Loading"
+import { BarChart } from "@mui/x-charts"
+
 
 const GraphBill = () => {
     const [bill, setBill] = useState<Bill |null>(null)
@@ -44,12 +46,24 @@ const GraphBill = () => {
             setSeries(data)
         }
     }
-
     if(loading){
         return <Loading/>
     }
     return(
         <>
+        <BarChart
+            xAxis={[{ 
+                scaleType: 'band', 
+                data: subcategories,
+                colorMap: {
+                    type: 'ordinal',
+                    colors: ['#cacf85'],
+                  } 
+            }]}
+            barLabel="value"
+            series={[{ data: series}]}
+            height={300}
+        />
         </>
     )
 }

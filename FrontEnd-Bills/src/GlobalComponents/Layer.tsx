@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom"
 const Layer:React.FC = () => {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
     return(
-        <Box sx={{maxWidth:'100vw', minHeight:'100vh'}} bgcolor={'primary.dark'}>
+        <Box sx={{maxWidth:'100vw', minHeight:'100vh'}} bgcolor={'primary.light'}>
             <Navbar setOpenDrawer={setOpenDrawer}/>
             <VerticalNav setOpenDrawer={setOpenDrawer} openDrawer={openDrawer}/>
             <Outlet/>

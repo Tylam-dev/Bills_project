@@ -11,7 +11,7 @@ const BillsList:React.FC<ComponentProps> = ({bills}) => {
     console.log(bills)
     return(
         <>
-            <Box sx={{display:'flex', flexDirection:'column', gap:1, bgcolor:'primary.dark', p:2}}>
+            <Box sx={{display:'flex', flexDirection:'column', gap:1, bgcolor:'primary.light', p:2}}>
                 {bills.map((bill, index) => (
                     <Paper 
                     elevation={4} 
