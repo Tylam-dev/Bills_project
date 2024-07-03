@@ -24,8 +24,7 @@ import { BillModal } from './Routes/BillsPage/Components/BillsModal/BillModal';
 import { ProductOfBillModal } from './Routes/BillsPage/Components/BillsModal/ProductOfBillModal';
 import { EditProductBillModal } from './Routes/BillsPage/Components/BillsModal/EditProductBill';
 import { IncomePage } from './Routes/IncomesPage/Index';
-import { GraphPage } from './Routes/GraphsPage/Index';
-import { GraphBill } from './Routes/GraphsPage/Components/GraphBill';
+import { GraphBillModal } from './Routes/BillsPage/Components/BillsModal/GraphBillModal';
 
 const theme = createTheme({
   palette: {
@@ -60,6 +59,7 @@ function App() {
                 <Route path='Bill/:idBill/' element={<BillModal/>}>
                   <Route path='addProductBill' element={<ProductOfBillModal/>}/>
                   <Route path='editProductBill/:idProductBill/:nameProduct' element={<EditProductBillModal/>}/>
+                  <Route path='graph' element={<GraphBillModal/>}/>
                 </Route>
               </Route>
               <Route path='incomes' element={<IncomePage/>}>
@@ -70,9 +70,6 @@ function App() {
               <Route path='income-managment' element={<IncomeManagmentPage/>}>
                 <Route path='addCatIncome' element={<AddCatIncomeModal/>}/>
                 <Route path='deleteCatIncome/:idCatInc/:nameIn' element={<DeleteCatIncomeModal/>}/>
-              </Route>
-              <Route path='graphs' element={<GraphPage/>}>
-                <Route path='bill/:idBill' element={<GraphBill/>}/>
               </Route>
             </Route>
           </Routes>

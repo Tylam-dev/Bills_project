@@ -7,6 +7,8 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { IncomeServiceHook } from "../../customHooks/IncomeServiceHook";
 import { IncomesCard } from "./IncomesCard";
 import { Income } from "../../interfaces/CategoriesIncome";
+import EqualizerIcon from '@mui/icons-material/Equalizer';
+import { GraphIncome } from "./GraphModal/GraphIncome";
 
 interface FromToDate {
     from?: string,
@@ -16,6 +18,7 @@ interface FromToDate {
 const IncomePage: React.FC = () => {
     const [incomes, setIncome] = useState<[] | Income[]> ([])
     const [ date, setDate ] = useState<FromToDate>()
+    const [openGraph, setOpenGraph] = useState<boolean>(false)
     const { getIncomes } = IncomeServiceHook()
     const navigate = useNavigate()
     const getData = async() => {
@@ -26,22 +29,33 @@ const IncomePage: React.FC = () => {
             const data:Income[] = await getIncomes()
             setIncome(data)
         }
-        
     }
-
     return(
         <>
             <Box marginY={2} paddingX={2} display={"flex"} justifyContent={'space-between'} alignItems={'center'}>
                 <Typography width={10} color={'secondary'} variant="h4">
                     Incomes
                 </Typography>
-                <Button 
-                sx={{height: 50}} 
-                variant="contained"
-                onClick={() => navigate('addIncome')}
-                >
-                    <AddIcon/>
-                </Button>
+                <Box display={'flex'} justifyContent={'space-between'} gap={2}>
+                    {(incomes.length != 0)?
+                        <Button 
+                        sx={{height: 50}} 
+                        variant="contained"
+                        onClick={() => setOpenGraph(true)}
+                        >
+                            <EqualizerIcon/>
+                        </Button>
+                        :
+                        ""
+                    }
+                    <Button 
+                    sx={{height: 50}} 
+                    variant="contained"
+                    onClick={() => navigate('addIncome')}
+                    >
+                        <AddIcon/>
+                    </Button>
+                </Box>
             </Box>
             <Box sx={{padding:1, display:'flex', justifyContent:'space-around'}}>
                 <DatePicker
@@ -72,6 +86,8 @@ const IncomePage: React.FC = () => {
             </Box>
             <IncomesCard incomes={incomes}/>
             <Outlet/>
+            {openGraph && <GraphIncome open={openGraph} setOpen={setOpenGraph} incomes={incomes}/>}
+
         </>
     )
 }

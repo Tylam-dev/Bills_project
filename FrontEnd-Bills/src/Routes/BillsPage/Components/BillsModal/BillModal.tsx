@@ -113,7 +113,7 @@ const BillModal = () => {
                 color="primary"
                 sx={{height: 57}} 
                 variant="contained"
-                onClick={() => navigate(`/graphs/bill/${idBill}`)}
+                onClick={() => navigate(`graph`)}
                 >
                     <EqualizerIcon/>
                 </Button>

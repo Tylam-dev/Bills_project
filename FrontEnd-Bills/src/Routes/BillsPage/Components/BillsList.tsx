@@ -8,7 +8,6 @@ interface ComponentProps {
 
 const BillsList:React.FC<ComponentProps> = ({bills}) => {
     const navigate = useNavigate()
-    console.log(bills)
     return(
         <>
             <Box sx={{display:'flex', flexDirection:'column', gap:1, bgcolor:'primary.light', p:2}}>
